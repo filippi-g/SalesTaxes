@@ -31,6 +31,7 @@ public class ParseCSV2BeanTest {
 
 	@Test
 	public void testCSVtoIntegerBean() {
+		
 		ParseCSV2Bean p = new ParseCSV2Bean();
 		Set<Integer> set = p.parseCSVtoInteger(FILENAME);
 
