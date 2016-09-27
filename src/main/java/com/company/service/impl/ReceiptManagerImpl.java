@@ -58,7 +58,7 @@ public class ReceiptManagerImpl implements ReceiptManager {
 			if ( item.doSalesTaxesCalculation() ){
 				itemsList.add( item );
 			}else{
-				throw new CalculationErrorException("doSalesTaxesCalculation error on product " +p.getProductNumber());
+				throw new CalculationErrorException("doSalesTaxesCalculation error on product " + p.getProductNumber());
 			}
 		}
 		return itemsList;

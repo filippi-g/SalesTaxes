@@ -27,11 +27,20 @@ public class ItemAllBean extends Item{
 	public boolean doSalesTaxesCalculation() throws CalculationErrorException {
 		logger.info("doSalesTaxesCalculation");
 		try{
-			Double salesTax = TaxesCalculation.calcolationTax(productDetail.getPrice(), productDetail.getImported(), TaxesCalculation.BASIC_SALES);
-			boolean rounding = TaxesCalculation.EXCEPT_SALES != salesTax;
-			String salesTaxString = TaxesCalculation.fromDoubleToString(salesTax, rounding);
-			setSalesTax( salesTaxString );
-			setFinalCost( TaxesCalculation.fromDoubleToString(Double.parseDouble(salesTaxString) + Double.parseDouble(productDetail.getPrice()), false) );
+			double priceDouble = Double.parseDouble(productDetail.getPrice());
+			Double salesTaxBasic = TaxesCalculation.calcolationSalesTaxBasic(priceDouble);
+			Double salesTaxBasicRound = TaxesCalculation.roundNearestDoubleValue(salesTaxBasic);
+			logger.debug("doSalesTaxesCalculation salesTaxBasic {} ", salesTaxBasic);
+			logger.debug("doSalesTaxesCalculation salesTaxBasicRound {} ", salesTaxBasicRound);
+			Double salesImportedTax = TaxesCalculation.calcolationSalesImportedTax(priceDouble,  productDetail.getImported());
+			Double salesImportedTaxRound = TaxesCalculation.roundNearestDoubleValue(salesImportedTax);
+
+			String salesTaxRoundFrmt = TaxesCalculation.fromDoubleToFormattedString( salesTaxBasicRound + salesImportedTaxRound );
+			String finalCostRoundFrmt = TaxesCalculation.fromDoubleToFormattedString( salesTaxBasicRound + salesImportedTaxRound + priceDouble);
+			logger.info("doSalesTaxesCalculation salesTaxRoundFrmt {} ", salesTaxRoundFrmt);
+			logger.info("doSalesTaxesCalculation finalCostRoundFrmt {} ", finalCostRoundFrmt);
+			setSalesTax( salesTaxRoundFrmt );
+			setFinalCost( finalCostRoundFrmt );
 		}catch (Exception e) {
 			logger.error("doSalesTaxesCalculation ", e);
 			throw new CalculationErrorException("calcolationTax");

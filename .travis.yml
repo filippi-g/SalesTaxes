@@ -2,3 +2,6 @@ language: java
  
 script: 
 - mvn clean install -DskipTests=false
+
+notifications:
+  email: false

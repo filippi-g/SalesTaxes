@@ -2,6 +2,7 @@ package com.company.common.csv;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,17 +20,22 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
  * @author Candidate GFILIPPI
  *
  */
-public class ParseCSV2Bean {
+public final class ParseCSV2BeanSingleton {
+
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ParseCSV2BeanSingleton.class);
+	private static final String FILENAME = "./input/ProductDetail.csv";
+	private static ParseCSV2BeanSingleton instance = null;
+	private List<ProductDetail> productList = null;
+	private Set<Integer> set = null;
 	
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ParseCSV2Bean.class);
+	private ParseCSV2BeanSingleton(){
+		initParseCSV2BeanSingleton() ;
+	}
 	
-	public List<ProductDetail> parseCSVtoBean(String filename) 
-	{
-		List<ProductDetail> productList = null;
-		try 
-		{
+	private void initParseCSV2BeanSingleton() {
+		try {
 			// Ignore Processing of 1st row
-			CSVReader reader = new CSVReader(new FileReader(filename), ';', '\"', 1);
+			CSVReader reader = new CSVReader(new FileReader(FILENAME), ';', '\"', 1);
 
 			ColumnPositionMappingStrategy<ProductDetail> mappingStrategy 
 			= new ColumnPositionMappingStrategy<ProductDetail>();
@@ -39,10 +45,12 @@ public class ParseCSV2Bean {
 			mappingStrategy.setColumnMapping(columns);
 
 			CsvToBean<ProductDetail> csv = new CsvToBean<ProductDetail>();
+			productList = new ArrayList<ProductDetail>();
 			productList = csv.parse(mappingStrategy, reader);
+			
+			set = new HashSet<Integer>();
 
-			for (int i = 0; i < productList.size(); i++) 
-			{
+			for (int i = 0; i < productList.size(); i++) {
 				ProductDetail productDetail = productList.get(i);
 				// display CSV values
 				logger.debug("productNumber : {}", productDetail.getProductNumber());
@@ -51,45 +59,27 @@ public class ParseCSV2Bean {
 				logger.debug("category : {}", productDetail.getCategory());
 				logger.debug("imported : {}", productDetail.getImported());
 				logger.debug("basketId : {}", productDetail.getBasketId());
-				logger.debug("------------------------------");
-			}
-			return productList;
-		}catch (FileNotFoundException e) {
-			logger.error("FileNotFoundException ", e);
-		}
-		return null;
-	}
-	
-	public Set<Integer> parseCSVtoInteger(String filename) 
-	{
-		List<ProductDetail> productList = null;
-		 Set<Integer> set = new HashSet<Integer>();
-		try 
-		{
-			// Ignore Processing of 1st row
-			CSVReader reader = new CSVReader(new FileReader(filename), ';', '\"', 1);
-
-			ColumnPositionMappingStrategy<ProductDetail> mappingStrategy 
-			= new ColumnPositionMappingStrategy<ProductDetail>();
-			mappingStrategy.setType(ProductDetail.class);
-
-			String[] columns = new String[] {"productNumber","productName","price","category","imported","basketId"};
-			mappingStrategy.setColumnMapping(columns);
-
-			CsvToBean<ProductDetail> csv = new CsvToBean<ProductDetail>();
-			productList = csv.parse(mappingStrategy, reader);
-
-			for (int i = 0; i < productList.size(); i++) 
-			{
-				ProductDetail productDetail = productList.get(i);
-				logger.debug("basketId : {}", productDetail.getBasketId());
 				set.add(new Integer(productDetail.getBasketId()));
 				logger.debug("------------------------------");
 			}
-			return set;
+			
 		}catch (FileNotFoundException e) {
 			logger.error("FileNotFoundException ", e);
 		}
-		return null;
+	}
+
+	public static ParseCSV2BeanSingleton getInstance() {
+		if ( instance == null){
+			instance = new ParseCSV2BeanSingleton();
+		}
+		return instance;
+	}
+	
+	public List<ProductDetail> getProductList() {
+		return productList;
+	}
+
+	public Set<Integer> getBasketIds() {
+		return set;
 	}
 }

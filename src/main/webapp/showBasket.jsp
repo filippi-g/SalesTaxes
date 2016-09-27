@@ -9,18 +9,20 @@
 
 	<table>
 		<tr height="20px">
-			<th colspan="3">Sales Taxes - Basket Number: <c:out
+			<th colspan="4">Sales Taxes - Basket Number: <c:out
 					value="${requestScope.basketId}" /></th>
 		</tr>
 		<tr height="10px"></tr>
 		<tr>
 			<th>Cod.</th>
+			<th>Quantity</th>
 			<th>Product</th>
 			<th>Price</th>
 		</tr>
 		<c:forEach items="${requestScope.list}" var="lists">
 			<tr>
 				<td><c:out value="${lists.productNumber}" /></td>
+				<td>1</td>
 				<td><c:out value="${lists.productName}" /></td>
 				<td><c:out value="${lists.price}" /></td>
 			</tr>

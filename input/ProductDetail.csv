@@ -12,3 +12,4 @@ productNumber;productName;price;category;imported;basketId
 011;bread;1.99;FOOD;NO;5;
 012;water;1.02;FOOD;YES;5;
 013;10 sigars;47.50;ALL;YES;6;
+014;music CD;14.99;ALL;NO;6;

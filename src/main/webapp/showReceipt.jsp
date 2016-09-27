@@ -14,12 +14,14 @@
 		<tr height="10px"></tr>
 		<tr>
 			<th>Cod.</th>
+			<th>Quantity</th>
 			<th>Product</th>
 			<th>Price</th>
 		</tr>
 		<c:forEach items="${requestScope.receipt.itemsList}" var="item">
 			<tr>
 				<td><c:out value="${item.productDetail.productNumber}" /></td>
+				<td>1</td>
 				<td><c:out value="${item.productDetail.productName}" /></td>
 				<td><c:out value="${item.finalCost}" /></td>
 			</tr>

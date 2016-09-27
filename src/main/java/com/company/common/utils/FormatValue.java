@@ -13,17 +13,18 @@ import java.util.Locale;
 public class FormatValue {
 
 	public static final String DECIMAL_FORMAT = "#0.00";
-	public static final DecimalFormat formatter = new DecimalFormat(DECIMAL_FORMAT, DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
-
-	public static String fromDoubleToString(Double d){
-		formatter.setRoundingMode( RoundingMode.UP );
-		String s = formatter.format(d);
-		return s;
+	public static DecimalFormat formatter = null;
+	
+	
+	public FormatValue() {
 	}
 	
-	public static DecimalFormat getDecimalFormat(){
-		return formatter;
+	public static String fromDoubleToString(Double d){
+		if (formatter==null){
+			formatter = new DecimalFormat(DECIMAL_FORMAT, DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
+			formatter.setRoundingMode( RoundingMode.UP );
+		}
+		return formatter.format(d);
 	}
-
 
 }

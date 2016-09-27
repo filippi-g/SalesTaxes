@@ -1,6 +1,7 @@
 package com.company.common.csv;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.List;
@@ -16,13 +17,12 @@ import com.company.domain.model.ProductDetail;
 public class ParseCSV2BeanTest {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ParseCSV2BeanTest.class);
-
-	private static final String FILENAME = "./input/ProductDetail.csv";
-
+	
+	ParseCSV2BeanSingleton parseCSV2BeanSingleton = ParseCSV2BeanSingleton.getInstance();
+	
 	@Test
 	public void testParseCSVtoBean() {
-		ParseCSV2Bean p = new ParseCSV2Bean();
-		List<ProductDetail> list = p.parseCSVtoBean(FILENAME);
+		List<ProductDetail> list = parseCSV2BeanSingleton.getProductList();
 		assertNotNull(list);
 		assertTrue(list!=null);
 		assertTrue(list.size()>0);
@@ -31,9 +31,7 @@ public class ParseCSV2BeanTest {
 
 	@Test
 	public void testCSVtoIntegerBean() {
-		
-		ParseCSV2Bean p = new ParseCSV2Bean();
-		Set<Integer> set = p.parseCSVtoInteger(FILENAME);
+		Set<Integer> set = parseCSV2BeanSingleton.getBasketIds();
 
 		assertNotNull(set);
 		assertTrue(set!=null);
