@@ -1,0 +1,14 @@
+productNumber;productName;price;category;imported;basketId
+001;book;12.49;BOOK;NO;1;
+002;music CD;14.99;ALL;NO;1;
+003;chocolate bar;0.85;FOOD;NO;1;
+004;box of chocolates;10.00;FOOD;YES;2;
+005;bottle of perfume;47.50;ALL;YES;2;
+006;bottle of perfume;27.99;ALL;YES;3;
+007;bottle of perfume;18.99;ALL;NO;3;
+008;packet of headache pills;9.75;MED;NO;3;
+009;chocolates;11.25;FOOD;YES;3;
+010;milk;3.55;FOOD;YES;4;
+011;bread;1.99;FOOD;NO;5;
+012;water;1.02;FOOD;YES;5;
+013;10 sigars;47.50;ALL;YES;6;
