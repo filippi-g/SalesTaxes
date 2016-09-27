@@ -46,7 +46,7 @@ public class ParseCSV2BeanTest {
 			ascSortedBasket.put(setElement, "Number : " + setElement);
 		}
 
-		assertNotNull(ascSortedBasket);
+		logger.debug("assertNotNull - ascSortedBasket: {} ", ascSortedBasket!=null);
 		assertTrue(ascSortedBasket!=null);
 		assertTrue(ascSortedBasket.size()>0);
 		logger.debug("ascSortedBasket - size: {} ",ascSortedBasket.size());
